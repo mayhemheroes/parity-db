@@ -28,6 +28,7 @@ const LAST_SUPPORTED_VERSION: u32 = 4;
 
 /// Database configuration.
 #[derive(Clone, Debug)]
+#[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))]
 pub struct Options {
 	/// Database path.
 	pub path: std::path::PathBuf,
@@ -47,6 +48,7 @@ pub struct Options {
 }
 
 #[derive(Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))]
 pub struct ColumnOptions {
 	/// Indicates that the column value is the preimage of the key.
 	/// This implies that a given value always has the same key.
@@ -229,12 +231,23 @@ impl Options {
 	}
 
 	pub fn load_metadata_file(path: &Path) -> Result<Option<Metadata>> {
-		use std::{io::BufRead, str::FromStr};
-
 		if !path.exists() {
 			return Ok(None)
 		}
-		let file = std::io::BufReader::new(std::fs::File::open(path)?);
+
+		let file = std::fs::File::open(path)?;
+		Self::load_metadata_from_reader(file)
+	}
+
+	#[cfg(fuzzing)]
+	pub fn load_fuzzed_metadata(data: &[u8]) -> Result<Option<Metadata>> {
+		Self::load_metadata_from_reader(data)
+	}
+
+	fn load_metadata_from_reader(file: impl std::io::Read) -> Result<Option<Metadata>> {
+		use std::{io::BufRead, str::FromStr};
+
+		let file = std::io::BufReader::new(file);
 		let mut salt = None;
 		let mut columns = Vec::new();
 		let mut version = 0;

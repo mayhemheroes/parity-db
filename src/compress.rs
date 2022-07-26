@@ -22,6 +22,7 @@ use crate::error::Result;
 /// allowend and their u8 representation.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(u8)]
+#[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))]
 pub enum CompressionType {
 	NoCompression = 0,
 	Lz4 = 1,

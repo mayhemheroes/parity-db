@@ -1,0 +1,7 @@
+project: parity-db
+target: open-metadata
+
+cmds:
+  - cmd: /open_metadata
+  - cmd: /open_metadata_no_inst @@
+    libfuzzer: false

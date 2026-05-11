@@ -337,7 +337,8 @@ impl BTreeTable {
 			}
 		}
 
-		let old_comp = tables.compression;
+		// Set compression to NO_COMPRESSION for the duration of the write operation.
+		// Note that this only sets the reference in the temporary `TablesRef` instance.
 		tables.compression = &crate::compress::NO_COMPRESSION;
 		let result = Ok(if let Some(existing) = node_id {
 			let k = TableKey::NoHash;
@@ -358,7 +359,6 @@ impl BTreeTable {
 			let k = TableKey::NoHash;
 			Some(Column::write_new_value_plan(&k, tables, entry.encoded.as_ref(), writer, None)?)
 		});
-		tables.compression = old_comp;
 
 		result
 	}

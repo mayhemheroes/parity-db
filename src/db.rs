@@ -507,7 +507,7 @@ impl DbInner {
 		}
 	}
 
-	fn btree_iter(&self, col: ColId) -> Result<BTreeIterator> {
+	fn btree_iter(&self, col: ColId) -> Result<BTreeIterator<'_>> {
 		match &self.columns[col as usize] {
 			Column::Hash(_column) =>
 				Err(Error::InvalidConfiguration("Not an indexed column.".to_string())),
@@ -1556,7 +1556,7 @@ impl Db {
 
 	/// Iterate over all ordered key-value pairs. Only supported for columns configured with
 	/// `btree_indexed`.
-	pub fn iter(&self, col: ColId) -> Result<BTreeIterator> {
+	pub fn iter(&self, col: ColId) -> Result<BTreeIterator<'_>> {
 		self.inner.btree_iter(col)
 	}
 

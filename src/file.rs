@@ -148,7 +148,7 @@ impl TableFile {
 	}
 
 	#[cfg(not(feature = "loom"))]
-	pub fn slice_at(&self, offset: u64, len: usize) -> MappedBytesGuard {
+	pub fn slice_at(&self, offset: u64, len: usize) -> MappedBytesGuard<'_> {
 		let offset = offset as usize;
 		let map = self.map.read();
 		parking_lot::RwLockReadGuard::map(map, |map| {

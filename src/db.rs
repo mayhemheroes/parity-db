@@ -1609,7 +1609,9 @@ impl Db {
 	///
 	/// This method passes values as `Arc<Vec<u8>>` potentially eliminating an extra copy.
 	#[cfg(feature = "arc")]
-	#[deprecated(note = "This method will be removed in future versions. Use `commit_changes_bytes` instead")]
+	#[deprecated(
+		note = "This method will be removed in future versions. Use `commit_changes_bytes` instead"
+	)]
 	pub fn commit_changes_shared<I>(&self, tx: I) -> Result<()>
 	where
 		I: IntoIterator<Item = (ColId, Operation<Vec<u8>, Arc<Vec<u8>>>)>,

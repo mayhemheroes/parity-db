@@ -4,7 +4,11 @@ The format is based on [Keep a Changelog].
 
 [Keep a Changelog]: http://keepachangelog.com/en/1.0.0/
 
-## [v0.5.4] - 2024-07-12
+## [v0.5.5] - 2026-05-111
+
+- Use ahash on live overlays [`#250`](https://github.com/paritytech/parity-db/pull/250)
+
+## [v0.5.4] - 2025-08-28
 
 -  Add commit_changes_bytes() method to Db [`#248`](https://github.com/paritytech/parity-db/pull/248)
 

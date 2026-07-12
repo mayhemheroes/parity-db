@@ -1,0 +1,5 @@
+project: parity-db
+target: simple_model
+cmds:
+  - cmd: /mayhem/simple_model
+    libfuzzer: true

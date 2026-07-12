@@ -1,0 +1,39 @@
+[package]
+name = "parity-db-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+arbitrary = { version = "1", features = ["derive"] }
+libfuzzer-sys = "0.4"
+log = "0.4.8"
+parity-db = { path = "../..", features = ["instrumentation"] }
+tempfile = "3"
+
+[profile.release]
+debug = 1
+
+[workspace]
+members = ["."]
+
+[[bin]]
+name = "simple_model"
+path = "fuzz_targets/simple_model.rs"
+test = false
+doc = false
+
+[[bin]]
+name = "refcounted_model"
+path = "fuzz_targets/refcounted_model.rs"
+test = false
+doc = false
+
+[[bin]]
+name = "open_metadata"
+path = "fuzz_targets/open_metadata.rs"
+test = false
+doc = false

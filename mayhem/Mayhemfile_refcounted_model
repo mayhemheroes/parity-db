@@ -1,0 +1,5 @@
+project: parity-db
+target: refcounted_model
+cmds:
+  - cmd: /mayhem/refcounted_model
+    libfuzzer: true
